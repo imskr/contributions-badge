@@ -24,15 +24,23 @@ class Contributions
       # Update README.md with the count
       # readme_path = File.join(__dir__, 'README.md')
       readme_path = ENV['INPUT_README_PATH']
+      git_username = ENV['INPUT_COMMIT_USER']
+      git_email = ENV['INPUT_COMMIT_EMAIL']
+
       readme_content = File.read(readme_path)
       updated_readme_content = readme_content.gsub(/MERGED_PULL_REQUESTS_COUNT/, merged_count.to_s)
       File.write(readme_path, updated_readme_content)
 
       # git flow
       commit_message = ENV['INPUT_COMMIT_MESSAGE'] || 'Update README.md'
-      `git add #{readme_path}`
-      `git commit -m "#{commit_message}"`
-      `git push origin HEAD`
+      `git config user.name #{git_username}`
+      `git config user.email #{git_email}`
+      status = `git status`
+      if !status.includes?("nothing to commit")
+        `git add #{readme_path}`
+        `git commit -m "#{commit_message}"`
+        `git push origin HEAD`
+      end
     else
       puts "Failed to retrieve merged pull requests: #{res.code} - #{res.message}"
     end
