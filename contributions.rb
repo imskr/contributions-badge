@@ -33,6 +33,7 @@ class Contributions
 
       # git flow
       commit_message = ENV['INPUT_COMMIT_MESSAGE'] || 'Update README.md'
+      `git config --global --add safe.directory /github/workspace`
       `git config user.name #{git_username}`
       `git config user.email #{git_email}`
       status = `git status`
