@@ -8,11 +8,10 @@ class Contributions
     organization = ENV['INPUT_ORGANIZATION']
     project      = ENV['INPUT_PROJECT']
     username      = ENV['INPUT_USERNAME']
-    gitlab_url = "https://gitlab.com/api/v4/projects/#{organization}%2F#{project}/merge_requests?scope=all&state=merged&author_username=#{username}"
+    gitlab_url = "https://gitlab.com/api/v4/projects/#{organization}%2F#{project}/merge_requests?scope=all&state=merged&author_username=#{username}&per_page=1000"
 
     uri = URI(gitlab_url)
     req = Net::HTTP::Get.new(uri)
-    # req['PRIVATE-TOKEN'] = gitlab_token
 
     res = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
       http.request(req)
@@ -23,14 +22,15 @@ class Contributions
       merged_count = merged_merge_requests.count
 
       # Update README.md with the count
-      # readme_path = File.join(__dir__, '..', '..', 'README.md')
-      readme_content = File.read(INPUT_README_PATH)
+      # readme_path = File.join(__dir__, 'README.md')
+      readme_path = ENV['INPUT_README_PATH']
+      readme_content = File.read(readme_path)
       updated_readme_content = readme_content.gsub(/MERGED_PULL_REQUESTS_COUNT/, merged_count.to_s)
       File.write(readme_path, updated_readme_content)
 
       # git flow
       commit_message = ENV['INPUT_COMMIT_MESSAGE'] || 'Update README.md'
-      `git add #{readme_content}`
+      `git add #{readme_path}`
       `git commit -m "#{commit_message}"`
       `git push origin HEAD`
     else

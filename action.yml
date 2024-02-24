@@ -38,12 +38,12 @@ runs:
   using: "docker"
   image: "Dockerfile"
   args:
-  - "-organization=${{ inputs.organization }}"
-  - "-project=${{ inputs.project }}"
-  - "-username=${{ inputs.username }}"
-  - "-commit_user=${{ inputs.commit_user }}"
-  - "-commit_email=${{ inputs.commit_email }}"
-  - "-commit_message=${{ inputs.commit_message }}"
+    - "-organization=${{ inputs.organization }}"
+    - "-project=${{ inputs.project }}"
+    - "-username=${{ inputs.username }}"
+    - "-commit_user=${{ inputs.commit_user }}"
+    - "-commit_email=${{ inputs.commit_email }}"
+    - "-commit_message=${{ inputs.commit_message }}"
 
 branding:
   icon: 'file-text'
