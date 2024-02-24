@@ -12,11 +12,10 @@
 ## Usage
 
 1. Go to your repository
-2. Add the following to your **README.md** file, you can use any title. Just make sure that you use the following in your readme. The workflow will replace this comment with the number of merged pull requests:
+2. Add the following to your **README.md** file, you can use any title. Just make sure that you use `<!-- MERGED_PULL_REQUESTS_COUNT --><!-- MERGED_PULL_REQUESTS_END -->` in your readme. The workflow will replace this comment with the number of merged pull requests:
 
     ```markdown
     <!-- MERGED_PULL_REQUESTS_START -->
-    Pull requests merged in
     <!-- MERGED_PULL_REQUESTS_END -->
     ```
 
