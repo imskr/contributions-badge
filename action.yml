@@ -1,0 +1,50 @@
+name: "Contributions Badge"
+description: "Showcase your number of merged pull requests in profile's README dynamically"
+author: "Shubham Kumar @imskr"
+inputs:
+  organization:
+    description: "Organization name"
+    default: "gitlab-org"
+    required: true
+  project:
+    description: "Project name"
+    default: "gitlab"
+    required: true
+  username:
+    description: "Username"
+    default: "imskr"
+    required: true
+  readme_path:
+    description: "Path of readme file"
+    default: "./README.md"
+    required: false
+  commit_user:
+    description: "Git username"
+    default: "contributions-badge-bot"
+    required: false
+  commit_email:
+    description: "Git user email"
+    default: "contributions-badge-actions@example.com"
+    required: false
+  commit_message:
+    description: "Git commit message"
+    default: "Update readme with latest contributions count"
+    required: false
+outputs:
+  merged_count:
+    description: "Updated contributions count"
+
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  args:
+  - "-organization=${{ inputs.organization }}"
+  - "-project=${{ inputs.project }}"
+  - "-username=${{ inputs.username }}"
+  - "-commit_user=${{ inputs.commit_user }}"
+  - "-commit_email=${{ inputs.commit_email }}"
+  - "-commit_message=${{ inputs.commit_message }}"
+
+branding:
+  icon: 'file-text'
+  color: 'red'
