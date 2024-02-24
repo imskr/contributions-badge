@@ -36,10 +36,10 @@ class Contributions
       `git config user.name #{git_username}`
       `git config user.email #{git_email}`
       status = `git status`
-      if !status.includes?("nothing to commit")
+      if !status.include?("nothing to commit")
         `git add #{readme_path}`
         `git commit -m "#{commit_message}"`
-        `git push origin HEAD`
+        `git push`
       end
     else
       puts "Failed to retrieve merged pull requests: #{res.code} - #{res.message}"
