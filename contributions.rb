@@ -28,7 +28,9 @@ class Contributions
 
       # Update README.md with the count
       readme_content = File.read(readme_path)
-      updated_readme_content = readme_content.gsub(/<!-- MERGED_PULL_REQUESTS_COUNT -->/, merged_count.to_s)
+      start_marker = '<!-- MERGED_PULL_REQUESTS_START -->'
+      end_marker = '<!-- MERGED_PULL_REQUESTS_END -->'
+      updated_readme_content = readme_content.gsub(/#{start_marker}.*#{end_marker}/m, "#{start_marker}\nPull requests merged in #{project}: #{merged_count}\n#{end_marker}")
       File.write(readme_path, updated_readme_content)
 
       # git flow
