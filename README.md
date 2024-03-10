@@ -24,10 +24,10 @@
 
 ![](./public/images/contributions-workflow.png)
 
-5. Replace the above `organization`, `project` and `username` with your data.
+5. Replace the above `organization`, `project`, `platform` and `username` with your data.
 6. Commit and wait for it to run automatically, or you can also trigger it manually to see the result instantly.
 
-> Currently we are only supporting public projects on GitLab
+> Currently we are only supporting public projects on platform GitLab
 
 ## Results
 ![result](./public/images/results.png)

@@ -8,7 +8,10 @@ inputs:
     required: true
   project:
     description: "Project name"
-    default: "gitlab"
+    default: "github"
+    required: true
+  platform:
+    description: "Platform name" # accepted values: "github" or "gitlab"
     required: true
   username:
     description: "Username"
@@ -40,6 +43,7 @@ runs:
   args:
     - "-organization=${{ inputs.organization }}"
     - "-project=${{ inputs.project }}"
+    - "-platform=${{ inputs.platform }}"
     - "-username=${{ inputs.username }}"
     - "-commit_user=${{ inputs.commit_user }}"
     - "-commit_email=${{ inputs.commit_email }}"
