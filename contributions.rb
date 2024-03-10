@@ -16,7 +16,7 @@ class Contributions
 
     gitlab_url = "https://gitlab.com/api/v4/projects/#{organization}%2F#{project}/merge_requests?scope=all&state=merged&author_username=#{username}&per_page=1000"
 
-    fetch_and_update_readme(organization, project, platform, gitlab_url, readme_path, commit_message, git_username, git_email)
+    fetch_and_update_readme(organization, project, platform, username, gitlab_url, readme_path, commit_message, git_username, git_email)
   rescue StandardError => e
     puts "Error: #{e.message}"
     exit 1
