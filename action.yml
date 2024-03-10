@@ -8,10 +8,10 @@ inputs:
     required: true
   project:
     description: "Project name"
-    default: "github"
     required: true
   platform:
     description: "Platform name" # accepted values: "github" or "gitlab"
+    default: "github"
     required: true
   username:
     description: "Username"
