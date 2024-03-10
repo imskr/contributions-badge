@@ -15,8 +15,9 @@ class Contributions
     commit_message = ENV['INPUT_COMMIT_MESSAGE'] || 'Update README.md'
 
     gitlab_url = "https://gitlab.com/api/v4/projects/#{organization}%2F#{project}/merge_requests?scope=all&state=merged&author_username=#{username}&per_page=1000"
+    github_url = "https://api.github.com/repos/#{organization}/#{project}/pulls?state=merged&author=#{username}&per_page=100"
 
-    fetch_and_update_readme(organization, project, platform, username, gitlab_url, readme_path, commit_message, git_username, git_email)
+    fetch_and_update_readme(organization, project, platform, username, gitlab_url, github_url, readme_path, commit_message, git_username, git_email)
   rescue StandardError => e
     puts "Error: #{e.message}"
     exit 1
@@ -24,8 +25,17 @@ class Contributions
 
   private
 
-  def fetch_and_update_readme(organization, project, platform, username, gitlab_url, readme_path, commit_message, git_username, git_email)
-    uri = URI(gitlab_url)
+  def fetch_and_update_readme(organization, project, platform, username, gitlab_url, github_url, readme_path, commit_message, git_username, git_email)
+    if platform=="github"
+      url = github_url
+    elsif platform=="gitlab"
+      url = gitlab_url
+    else
+      puts "Unsupported platform #{platform}, only github and gitlab supported!"
+      exit 1
+    end
+
+    uri = URI(url)
     req = Net::HTTP::Get.new(uri)
 
     response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
@@ -47,8 +57,14 @@ class Contributions
     readme_content = File.read(readme_path)
     start_marker = '<!-- MERGED_PULL_REQUESTS_START -->'
     end_marker = '<!-- MERGED_PULL_REQUESTS_END -->'
-    contribution_link = "https://gitlab.com/#{organization}/#{project}/-/merge_requests?scope=all&state=merged&author_username=#{username}"
-    updated_readme_content = readme_content.gsub(/#{start_marker}.*#{end_marker}/m, "#{start_marker}\n[![](https://badgen.net/badge/#{organization}%2F#{project}/#{merged_count}/orange?icon=#{platform})](#{contribution_link})\n#{end_marker}")
+
+    if platform=="gitlab"
+      contribution_link = "https://gitlab.com/#{organization}/#{project}/-/merge_requests?scope=all&state=merged&author_username=#{username}"
+    elsif platform=="gitlab"
+      contribution_link = "https://github.com/#{organization}/#{project}/pulls?q=is:pr+author:#{username}+is:merged"
+    end
+
+    updated_readme_content = readme_content.gsub(/#{start_marker}.*#{end_marker}/m, "#{start_marker}\n[![](https://badgen.net/badge/#{organization}%2F#{project}/#{merged_count}%20pull%20requests%20merged/orange?icon=#{platform})](#{contribution_link})\n#{end_marker}")
     File.write(readme_path, updated_readme_content)
   end
 

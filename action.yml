@@ -10,7 +10,7 @@ inputs:
     description: "Project name"
     required: true
   platform:
-    description: "Platform name" # accepted values: "github" or "gitlab"
+    description: "Projects on platform" # accepted values: "github" or "gitlab"
     default: "github"
     required: true
   username:

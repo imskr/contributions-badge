@@ -22,15 +22,15 @@
 3. Create a folder `.github/workflows` inside root of the repository if it doesn't exists.
 4. Create a new file `contributions.yml`  inside `.github/workflows/`  with the following contents or copy it from [here](./examples/contributions.yml):
 
-![](./public/images/contributions-workflow.png)
+![](./public/images/workflow.png)
 
 5. Replace the above `organization`, `project`, `platform` and `username` with your data.
 6. Commit and wait for it to run automatically, or you can also trigger it manually to see the result instantly.
 
-> Currently we are only supporting public projects on platform GitLab
+> Currently we are only supporting public projects on platform GitLab and GitHub
 
 ## Results
-![result](./public/images/results.png)
+![result](./public/images/result.png)
 
 ## Support
 
