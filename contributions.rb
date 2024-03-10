@@ -2,6 +2,7 @@
 
 require 'net/http'
 require 'json'
+require 'open-uri'
 
 class Contributions
   def run
@@ -15,7 +16,7 @@ class Contributions
     commit_message = ENV['INPUT_COMMIT_MESSAGE'] || 'Update README.md'
 
     gitlab_url = "https://gitlab.com/api/v4/projects/#{organization}%2F#{project}/merge_requests?scope=all&state=merged&author_username=#{username}&per_page=1000"
-    github_url = "https://api.github.com/repos/#{organization}/#{project}/pulls?state=merged&author=#{username}&per_page=100"
+    github_url = "https://api.github.com/repos/#{organization}/#{project}/pulls?state=merged%20author=#{username}%20per_page=100"
 
     fetch_and_update_readme(organization, project, platform, username, gitlab_url, github_url, readme_path, commit_message, git_username, git_email)
   rescue StandardError => e
@@ -43,8 +44,20 @@ class Contributions
     end
 
     if response.is_a?(Net::HTTPSuccess)
-      merged_merge_requests = JSON.parse(response.body)
-      merged_count = merged_merge_requests.count
+      # hacky way - no github api for filtering with user
+      if platform=="github"
+        html_content = URI.open(url).read
+        match = html_content.match(/(\d+)\s*Total/)
+        if match
+          merged_count = match[1].to_i
+        else
+          puts "Failed to retrieve merged pull requests: #{response.code} - #{response.message}"
+          exit 1
+        end
+      else
+        merged_merge_requests = JSON.parse(response.body)
+        merged_count = merged_merge_requests.count
+      end
 
       update_readme_content(organization, project, platform, username, readme_path, merged_count)
       update_git_repo(readme_path, commit_message, git_username, git_email)
