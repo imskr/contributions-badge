@@ -23,8 +23,8 @@ class Contributions
 
   private
 
-  def fetch_and_update_readme(project, url, readme_path, commit_message, git_username, git_email)
-    uri = URI(url)
+  def fetch_and_update_readme(project, gitlab_url, readme_path, commit_message, git_username, git_email)
+    uri = URI(gitlab_url)
     req = Net::HTTP::Get.new(uri)
 
     response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) do |http|
@@ -44,8 +44,8 @@ class Contributions
 
   def update_readme_content(project, readme_path, merged_count)
     readme_content = File.read(readme_path)
-    start_marker = ''
-    end_marker = ''
+    start_marker = '<!-- MERGED_PULL_REQUESTS_START -->'
+    end_marker = '<!-- MERGED_PULL_REQUESTS_END -->'
     updated_readme_content = readme_content.gsub(/#{start_marker}.*#{end_marker}/m, "#{start_marker}\nPull requests merged in #{project}: #{merged_count}\n#{end_marker}")
     File.write(readme_path, updated_readme_content)
   end
