@@ -3,8 +3,9 @@
 > A github action workflow for showcasing your number of merged pull requests in profile's README dynamically
 
 <p align="center">
+    <img src="public/images/logo.png" height="150"><br>
     <a href="https://github.com/imskr/contributions-badge/releases"><img alt="GitHub release (latest by date including pre-releases)" src="https://img.shields.io/github/v/release/imskr/contributions-badge?include_prereleases&style=flat-square"></a>
-    <a href="https://github.com/imskr/contributions-badge/actions/workflows/build.yml"><img alt="Actions workflow" src="https://img.shields.io/github/workflow/status/imskr/contributions-badge/Build/main?style=flat-square"></a>
+    <a href="https://github.com/imskr/contributions-badge/actions/workflows/build.yml"><img alt="Actions workflow" src="https://img.shields.io/github/actions/workflow/status/imskr/contributions-badge/build.yml?style=flat-square&logo=github"></a>
     <a href="https://github.com/imskr/contributions-badge/issues"><img alt="Github Issues" src="https://img.shields.io/github/issues/imskr/contributions-badge?color=orange&style=flat-square"></a>
 </p>
 <hr noshade>
