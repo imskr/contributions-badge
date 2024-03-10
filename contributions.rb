@@ -60,7 +60,7 @@ class Contributions
 
     if platform=="gitlab"
       contribution_link = "https://gitlab.com/#{organization}/#{project}/-/merge_requests?scope=all&state=merged&author_username=#{username}"
-    elsif platform=="gitlab"
+    elsif platform=="github"
       contribution_link = "https://github.com/#{organization}/#{project}/pulls?q=is:pr+author:#{username}+is:merged"
     end
 
