@@ -16,7 +16,7 @@ class Contributions
     commit_message = ENV['INPUT_COMMIT_MESSAGE'] || 'Update README.md'
 
     gitlab_url = "https://gitlab.com/api/v4/projects/#{organization}%2F#{project}/merge_requests?scope=all&state=merged&author_username=#{username}&per_page=1000"
-    github_url = "https://api.github.com/repos/#{organization}/#{project}/pulls?state=merged%20author=#{username}%20per_page=100"
+    github_url = "https://github.com/#{organization}/#{project}/pulls?q=is%3Apr+author%3A#{username}+is%3Amerged"
 
     fetch_and_update_readme(organization, project, platform, username, gitlab_url, github_url, readme_path, commit_message, git_username, git_email)
   rescue StandardError => e
