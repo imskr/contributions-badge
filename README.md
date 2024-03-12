@@ -33,6 +33,8 @@
 ## Results
 ![result](./public/images/result.png)
 
+> See it in action [here](https://github.com/imskr/imskr/tree/master?tab=readme-ov-file#-open-source-contributions)
+
 ## Support
 
 <p>
